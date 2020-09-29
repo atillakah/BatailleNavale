@@ -2,11 +2,23 @@
 <html>
 <head>
 	<title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 <body>
 	<div class="container">
+    <div class="row">
+    <div class="score">
+      <h5>Nom de joueur:</h5>
+      <input type="" name="" value="<?php echo $_GET["name"]; ?>" class="form-control" value="name" disabled>
+      <h5>Score:</h5>
+      <input type="text" class="form-control" id="score" value="0" disabled>
+      <h5>Vous Bateaux:</h5>
+      <input type="text" class="form-control" id="nombr" value="17" disabled>
+      <h5>Ennemie bateaux:</h5>
+      <input type="text" class="form-control" id="nombrEnmie" value="17" disabled>
+    </div>
 <div class="grid grid-user">
 
 </div>
@@ -14,10 +26,14 @@
 	
 </div>
 </div>
+</div>
+<div class="row">
+<div class="col-lg-3"></div>
+<div class="col-lg-6">
     <div class="hidden-info">
-      <button id="start">Start Game</button>
-      <button id="rotate">Rotate Your Ships</button>
-      <h3 id="whose-go">Your Go</h3>
+      <button id="start" class="btn btn-primary">Jouer</button>
+      <button id="rotate" class="btn btn-primary">Tourner les bateaux</button>
+      <h3 id="whose-go"></h3>
       <h3 id="info"></h3>
     </div>
     <div class="grid-display">
@@ -49,7 +65,8 @@
           <div id="carrier-4"></div>
         </div>        
       </div>
-
+    </div>
+</div>
 </body>
  <script type="text/javascript" src="js/script.js"></script>
 </html>

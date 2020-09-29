@@ -16,7 +16,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
 	const computerSquares = [];
 	let isHorizontal = true;
 	const width = 10;
+	let startGame = false;
+	StartButton.addEventListener("click",()=>{
+        if (displayGrid.childElementCount==0) {
 
+            startGame=true
+        }else{
+            console.log("hi")
+        }
+
+    })
 	function createBoardUser(grid, squares){
 		for(let i =0; i < width*width; i++){
 			const square = document.createElement('div');
@@ -24,16 +33,28 @@ document.addEventListener('DOMContentLoaded', ()=>{
 			square.classList.add("user-grid")
 			grid.appendChild(square);
 			squares.push(square)
-	function RandomDiv(event) {
-	var number = document.getElementsByClassName("user-grid")
+
+
+		}
+	}
+	createBoardUser(userGrid, userSquares);
+	createBoardOrdinateur(computerGrid, computerSquares)
+
+	function RandomDiv() {
+		var number = document.getElementsByClassName("user-grid")
+		console.log(number);
     var ChosenDiv = number[Math.floor(Math.random() * number.length)];
+    mv = ChosenDiv.getAttribute("class")
     console.log(ChosenDiv); //Just to show this.
-    var tsd = event.target;
-    var mvs =tsd.getAttribute("class"); 
-    console.log(mvs)
-    if (mvs ==="user-grid taken submarine" || mv ==="user-grid taken carrier" || mv ==="user-grid taken destroyer" || mv ==="user-grid taken battelship" || mv ==="user-grid taken cruiser") {
+    if (mv ==="user-grid taken submarine" || mv ==="user-grid taken carrier" || mv ==="user-grid taken destroyer" || mv ==="user-grid taken battelship" || mv ==="user-grid taken cruiser") {
     ChosenDiv.classList.remove("user-grid");
     ChosenDiv.classList.add("pc");
+    	var c = parseFloat(document.getElementById("nombr").value);
+	   	t = c-1;
+	   	document.getElementById("nombr").value = t
+	   	if(t ===0){
+	   		window.alert("Vous avez perdu")
+	   	}
 	}else{
 	ChosenDiv.classList.remove("user-grid");
     ChosenDiv.classList.add("pc1");
@@ -42,11 +63,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
    
 }
 
-		}
-	}
-	createBoardUser(userGrid, userSquares);
-	createBoardOrdinateur(computerGrid, computerSquares)
-
 		function createBoardOrdinateur(grid, squares){
 		for(let i =0; i < width*width; i++){
 			const square = document.createElement('div');
@@ -54,7 +70,46 @@ document.addEventListener('DOMContentLoaded', ()=>{
 			square.dataset.id = i;
 			grid.appendChild(square);
 			squares.push(square)
-
+			document.getElementById("score").value = "0";
+			document.getElementById("nombrEnmie").value = "17"; 
+			document.getElementById("nombr").value = "17";  
+			square.onclick = function(event){
+				if (startGame==true) {
+        var ts = event.target;
+        var mv =ts.getAttribute("class"); 
+        if(mv ==="shipsy taken submarine" || mv ==="shipsy taken carrier" || mv ==="shipsy taken destroyer" || mv ==="shipsy taken battelship" || mv ==="shipsy taken cruiser")    
+        {
+        ts.style.backgroundSize= "cover";
+        ts.style.backgroundImage= "url('./img/tenor.gif')";
+        ts.setAttribute("class", "clicked");
+        var x = parseFloat(document.getElementById("score").value);
+        var n = x+10;
+	   	document.getElementById("score").value = n
+	   	var m = parseFloat(document.getElementById("nombrEnmie").value);
+	   	s = m-1;
+	   	document.getElementById("nombrEnmie").value = s
+	   	if(s ===0){
+	   		window.alert("Vous avez Gagné")
+	   	}
+	   	setTimeout(function(){         
+	   	ts.style.backgroundSize= "cover";
+        ts.style.backgroundImage= "url('./img/fire.gif')"; }, 4000);
+        }
+        else{
+        ts.style.backgroundSize= "cover";
+        ts.style.backgroundImage= "url('./img/giphy.gif')";
+        ts.setAttribute("class", "clicked");
+        var x = parseFloat(document.getElementById("score").value);
+        var n = x-1;
+	   	document.getElementById("score").value = n
+        setTimeout(function(){         
+	   	ts.style.backgroundSize= "cover";
+        ts.style.backgroundImage= "url('./img/fail.gif')"; }, 4000);
+    }
+        setTimeout(function(){ RandomDiv() }, 1000);
+        
+    }
+}
 
 		}
 	}
@@ -179,17 +234,21 @@ let shipClass = shipNameWithLastId.slice(0, -2)
 console.log(shipClass)
 let lastShipIndex = parseFloat(shipNameWithLastId.substr(-1))
 let shipLastId = lastShipIndex + parseFloat(this.dataset.id)
+console.log(shipLastId)
+const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,12,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93]
+const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60]
+let newNotAllowedHorizontal = notAllowedHorizontal.slice(0, 10*lastShipIndex)
+let newNotAllowedVertical = notAllowedVertical.slice(0, 10*lastShipIndex)
 selectedShipIndex = parseFloat(selectedShipNameWithIndex.substr(-1))
 shipLastId =shipLastId-selectedShipIndex
-console.log(shipLastId)
-if(isHorizontal){
+if(isHorizontal && !newNotAllowedHorizontal.includes(shipLastId)){
 	let draggedShipLength = draggedShip.getElementsByTagName("div").length
 	console.log(draggedShipLength)
     for(let i=0; i< draggedShipLength; i++){
         userSquares[parseFloat(this.dataset.id)-selectedShipIndex + i].classList.add('taken', shipClass)
         console.log()
     }
-}else if (!isHorizontal){
+}else if (!isHorizontal && !notAllowedVertical.includes(shipLastId)){
 let draggedShipLength = draggedShip.getElementsByTagName("div").length
 for(let i=0; i< draggedShipLength; i++)
 {
