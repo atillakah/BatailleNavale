@@ -26,7 +26,7 @@
 <div class="col-md-6">
 <div class="form-l">
   <form method="post" action="">
-    <h5 class="hh1">Pour commencer veuillez remplir les champs suivants:</h5>
+    <h5 class="hh1">Pour commancer veuillez remplir les champs suivants:</h5>
   <div class="form-group">
     <label for="formGroupExampleInput">Nickname</label>
     <input type="text" name="nickname" class="form-control" id="formGroupExampleInput" placeholder="Nickname" required>
@@ -39,7 +39,7 @@
     <label for="formGroupExampleInput2">Age</label>
     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Age" required>
   </div>
-  <button type="submit" name="submit" class="btn btn-primary">Commencer</button>
+  <button type="submit" name="submit" class="btn btn-primary">Commancer</button>
 </form>
 <?php
 if(isset($_POST["submit"])){

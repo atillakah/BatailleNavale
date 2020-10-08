@@ -7,8 +7,17 @@
 
 </head>
 <body>
+  <div>
+<center>
+ <img src="img/opiece.png">
+</center>
+</div>
 	<div class="container">
     <div class="row">
+      <div>
+            <audio id="audio1" src="audio/Explosion.ogg"></audio>
+            <audio id="audio" src="audio/Cannon.ogg"></audio>
+      </div>
     <div class="score">
       <h5>Nom de joueur:</h5>
       <input type="" name="" value="<?php echo $_GET["name"]; ?>" class="form-control" value="name" disabled>
@@ -19,11 +28,12 @@
       <h5>Ennemie bateaux:</h5>
       <input type="text" class="form-control" id="nombrEnmie" value="17" disabled>
     </div>
-<div class="grid grid-user">
 
+<div class="grid grid-user">
+<div id="progres"></div> 
 </div>
 <div class="grid grid-computer">
-	
+<div id="progress"></div>
 </div>
 </div>
 </div>

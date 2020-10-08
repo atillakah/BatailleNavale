@@ -156,3 +156,19 @@
 .submarine{
     background-color: pink;
 }
+#progress{
+    width: 400px;
+    height: 20px;
+    border:solid black 2px;
+    background: skyblue;
+    display: flex;
+    flex-wrap: nowrap;
+}
+#progres{
+    width: 400px;
+    height: 20px;
+    border:solid black 2px;
+    background: skyblue;
+    display: flex;
+    flex-wrap: nowrap;
+}

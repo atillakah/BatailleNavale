@@ -16,16 +16,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
 	const computerSquares = [];
 	let isHorizontal = true;
 	const width = 10;
+  //Ne Pas Jouer Avant de cliquer ET le tableau User soit remplis
 	let startGame = false;
 	StartButton.addEventListener("click",()=>{
         if (displayGrid.childElementCount==0) {
 
             startGame=true
         }else{
-            console.log("hi")
+            
         }
 
     })
+  //Creation des Tables
+
 	function createBoardUser(grid, squares){
 		for(let i =0; i < width*width; i++){
 			const square = document.createElement('div');
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 	}
 	createBoardUser(userGrid, userSquares);
 	createBoardOrdinateur(computerGrid, computerSquares)
+ //Click Aleatoire de l'ordi
 
 	function RandomDiv() {
 		var number = document.getElementsByClassName("user-grid")
@@ -46,9 +50,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
     var ChosenDiv = number[Math.floor(Math.random() * number.length)];
     mv = ChosenDiv.getAttribute("class")
     console.log(ChosenDiv); //Just to show this.
+      //
+
     if (mv ==="user-grid taken submarine" || mv ==="user-grid taken carrier" || mv ==="user-grid taken destroyer" || mv ==="user-grid taken battelship" || mv ==="user-grid taken cruiser") {
     ChosenDiv.classList.remove("user-grid");
     ChosenDiv.classList.add("pc");
+    var pro = document.getElementById("progres");
+        var proDiv = document.createElement('span')
+        proDiv.setAttribute("class", "prog")
+        pro.appendChild(proDiv)
+        proDiv.style.backgroundColor= "yellow";
+        proDiv.style.width= "23px";
+        proDiv.style.display = "flex"
+        proDiv.style.height= "20px"
     	var c = parseFloat(document.getElementById("nombr").value);
 	   	t = c-1;
 	   	document.getElementById("nombr").value = t
@@ -72,13 +86,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
 			squares.push(square)
 			document.getElementById("score").value = "0";
 			document.getElementById("nombrEnmie").value = "17"; 
-			document.getElementById("nombr").value = "17";  
+			document.getElementById("nombr").value = "17"; 
+
 			square.onclick = function(event){
-				if (startGame==true) {
-        var ts = event.target;
+				if (startGame==true) {//click obligatoir sur le bouton jouer pour jouer
+        var ts = event.target; //affichage des images GIF on click
         var mv =ts.getAttribute("class"); 
         if(mv ==="shipsy taken submarine" || mv ==="shipsy taken carrier" || mv ==="shipsy taken destroyer" || mv ==="shipsy taken battelship" || mv ==="shipsy taken cruiser")    
         {
+        var pro = document.getElementById("progress");
+        var proDiv = document.createElement('span')
+        proDiv.setAttribute("class", "prog")
+        pro.appendChild(proDiv)
+        proDiv.style.backgroundColor= "yellow";
+        proDiv.style.width= "23px";
+        proDiv.style.display = "flex"
+        proDiv.style.height= "20px";
+        play()
+        function play() { //ajouter le son 
+        var audio = document.getElementById("audio1");
+        audio.play();
+        }
         ts.style.backgroundSize= "cover";
         ts.style.backgroundImage= "url('./img/tenor.gif')";
         ts.setAttribute("class", "clicked");
@@ -96,6 +124,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
         ts.style.backgroundImage= "url('./img/fire.gif')"; }, 4000);
         }
         else{
+        play()
+        function play() {
+        var audio = document.getElementById("audio");
+        audio.play();
+      }
         ts.style.backgroundSize= "cover";
         ts.style.backgroundImage= "url('./img/giphy.gif')";
         ts.setAttribute("class", "clicked");
@@ -108,6 +141,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
         setTimeout(function(){ RandomDiv() }, 1000);
         
+    }
+    else{
+      alert("Vous devez deplacer tout les bateaux et cliquer sur jouer!");
     }
 }
 
@@ -157,7 +193,7 @@ const shipArray=[
 
     },
 ]
-function generate(ship) {
+function generate(ship) { //generer les ships
     let randomDirection = Math.floor(Math.random() * ship.directions.length)
     let current = ship.directions[randomDirection]
   
@@ -178,7 +214,7 @@ generate(shipArray[1])
 generate(shipArray[2])
 generate(shipArray[3])
 generate(shipArray[4])
-function rotate(){
+function rotate(){//Rotation
     if(isHorizontal){
         destroyer.classList.toggle('destroyer-container-vertical')
         submarine.classList.toggle('submarine-container-vertical')
@@ -199,7 +235,7 @@ function rotate(){
           		}
            }
        	rotateButton.addEventListener('click', rotate)
-
+        //Drag & Drop
        	ships.forEach(ship =>ship.addEventListener('dragstart', dragStart))
        	userSquares.forEach(square => square.addEventListener('dragstart', dragStart))
        	userSquares.forEach(square => square.addEventListener('dragover', dragOver))
@@ -235,6 +271,7 @@ console.log(shipClass)
 let lastShipIndex = parseFloat(shipNameWithLastId.substr(-1))
 let shipLastId = lastShipIndex + parseFloat(this.dataset.id)
 console.log(shipLastId)
+//placer les ship uniquement dans le tableau
 const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,12,22,32,42,52,62,72,82,92,3,13,23,33,43,53,63,73,83,93]
 const notAllowedVertical = [99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60]
 let newNotAllowedHorizontal = notAllowedHorizontal.slice(0, 10*lastShipIndex)
